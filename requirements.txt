@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pandas
+openpyxl
+loguru
+jinja2
+prometheus-fastapi-instrumentator

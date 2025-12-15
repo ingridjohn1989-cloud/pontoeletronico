@@ -1,10 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Ponto Eletrônico</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            width: 380px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .entrada { background: #2ecc71; color: white; }
+        .almoco-inicio { background: #f1c40f; }
+        .almoco-fim { background: #e67e22; color: white; }
+        .saida { background: #e74c3c; color: white; }
+
+        #status {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-$END$
+<div class="card">
+    <h1>Ponto Eletrônico</h1>
+
+    <input type="text" id="nome" placeholder="Nome do colaborador">
+
+    <button class="entrada" onclick="registrar('checkIn')">Entrada</button>
+    <button class="almoco-inicio" onclick="registrar('lunchStart')">Início do Almoço</button>
+    <button class="almoco-fim" onclick="registrar('lunchEnd')">Fim do Almoço</button>
+    <button class="saida" onclick="registrar('checkOut')">Saída</button>
+
+    <div id="status"></div>
+</div>
+
+<script>
+    function registrar(tipo) {
+        const nome = document.getElementById("nome").value;
+
+        if (!nome) {
+            alert("Informe seu nome");
+            return;
+        }
+
+        fetch("/api/v1/time-entries", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                type: tipo
+            })
+        })
+        .then(r => r.json())
+        .then(d => {
+            document.getElementById("status").innerText =
+                `✔ ${tipo} registrado com sucesso`;
+        })
+        .catch(() => {
+            document.getElementById("status").innerText =
+                "Erro ao registrar ponto";
+        });
+    }
+</script>
 </body>
 </html>
