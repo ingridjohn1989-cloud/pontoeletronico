@@ -66,7 +66,7 @@
     <button class="entrada" onclick="registrar('checkIn')">Entrada</button>
     <button class="almoco-inicio" onclick="registrar('lunchStart')">Início do Almoço</button>
     <button class="almoco-fim" onclick="registrar('lunchEnd')">Fim do Almoço</button>
-    <button class="saida" onclick="registrar(''checkOut')">Saída</button>
+    <button class="saida" onclick="registrar('checkOut')">Saída</button>
 
     <div id="status"></div>
 </div>
@@ -84,6 +84,7 @@
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
+                user_id: nome,
                 type: tipo
             })
         })

@@ -10,7 +10,7 @@ router = APIRouter()
 @router.post("")
 def register_time_entry(payload: TimeEntryIn):
     entry = service.register_point(
-        user_id="demo_user",
+        user_id=payload.user_id,
         entry_type=payload.type,
         timestamp=datetime.utcnow().isoformat()
     )
